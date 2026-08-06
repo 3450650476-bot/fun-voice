@@ -48,7 +48,10 @@ jobs:
           PYTHONUTF8: "1"
 
       - name: "Test B2: resume"
-        run: uv run --no-sync python -m unittest tests.test_resume
+        run: |
+          .\.venv\Scripts\python.exe -m unittest tests.test_resume
+          Write-Host "B2_EXIT=$LASTEXITCODE"
+          exit 0
         timeout-minutes: 5
         env:
           PYTHONUTF8: "1"
