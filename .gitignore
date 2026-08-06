@@ -1,0 +1,24 @@
+# ==== Python ====
+__pycache__/
+*.pyc
+.venv/
+
+# ==== Secrets / local env (NEVER commit) ====
+.env
+
+# ==== Data / outputs / user privacy (not committed) ====
+workspace/
+models/
+HuggingFace/
+
+# ==== Runtime artifacts ====
+*.log
+*.bak
+.run.lock
+
+# ==== Bundled tools (large, download per README) ====
+tools/uv/uv.exe
+
+# ==== OS ====
+Thumbs.db
+Desktop.ini

@@ -1,0 +1,42 @@
+[project]
+name = "voice-pipeline"
+version = "0.1.0"
+description = "视频配音管道: 上传 → 人声分离 → ASR → 翻译中文 → 声音克隆 → 配音"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    # 核心框架
+    "torch==2.8.0",
+    "torchaudio==2.8.0",
+    "numpy>=2.1,<2.5",
+    "numba>=0.60",
+    # ASR
+    "faster-whisper==1.2.1",
+    # 人声分离 (MDX23C torch 自实现 + onnx 兜底; demucs 库暂缓——sdist 在 Windows 构建失败, 后续单独处理)
+    "onnxruntime-gpu==1.26.0",
+    # 声音克隆 TTS (qwen-tts 自动带兼容的 transformers 版本)
+    "qwen-tts",
+    # 音频处理
+    "soundfile",
+    "librosa>=0.10.2",
+    "pydub",
+    # 工具
+    "pyyaml",
+    "safetensors",
+    "huggingface-hub",
+    "python-dotenv",
+    "openai",
+    "pysubs2>=1.8.1",
+    "gradio>=6.0",
+]
+
+[tool.uv]
+package = false
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu128", marker = "sys_platform == 'win32'" }]
+torchaudio = [{ index = "pytorch-cu128", marker = "sys_platform == 'win32'" }]
