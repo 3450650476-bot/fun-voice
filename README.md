@@ -120,12 +120,32 @@ torch 2.8.0（Windows）三档：**cu128 / cu126 / cpu**。按 `nvidia-smi` 顶�
 无 GPU 或驱动过老（CUDA < 12.6，torch 2.8 无更老档）时选 cpu，或更新显卡驱动后用 cu 档。手动切换：改 `pyproject.toml` 的 `[[tool.uv.index]]` url 与 `[tool.uv.sources]` index 名（`pytorch-cu128` ↔ `pytorch-cu126` ↔ `pytorch-cpu`）后重跑 `uv sync`。
 
 ### 模型准备（bat [2] 环境检查对应）
+
+> ⚠️ **模型目录在项目文件夹的上一级**（与 fun-voice 同级），不是项目内部。完整布局：
+
+```
+你的部署目录/
+├── fun-voice/                  ← 从 GitHub 拉下来的代码 (本仓库)
+│   ├── app/  tests/  tools/  ...
+│   └── 启动FunVoice.bat
+└── models/                     ← 模型目录 (与 fun-voice 同级! 代码通过 ../models 定位)
+    ├── MDX_Net_Models/         ← MDX 三模型 (官方无直链, 需手动放置)
+    │   ├── MDX23C-8KFFT-InstVoc_HQ.ckpt      (428 MB)
+    │   ├── UVR-MDX-NET-Inst_HQ_3.onnx        (64 MB)
+    │   └── Kim_Vocal_2.onnx                  (64 MB)
+    ├── faster-whisper/         ← [5] 自动下载
+    ├── ffmpeg/bin/             ← [5] 自动下载
+    └── ... (其他模型目录)
+```
+
 | 模型 | 位置 | 获取方式 |
 |---|---|---|
-| MDX 分离（3 个 .ckpt/.onnx） | `models\MDX_Net_Models\` | **随项目拷贝**（官方无直链） |
-| faster-whisper | `models\faster-whisper\large-v3-turbo\` | `hf-mirror.com` 下载或拷贝 |
-| Qwen3-TTS | `..\..\HuggingFace\models\Qwen3-TTS-12Hz-1.7B-Base\` | `hf-mirror.com` 下载或拷贝 |
-| ffmpeg | `models\ffmpeg\bin\ffmpeg.exe` | gyan.dev / BtbN 下载 |
+| MDX 分离（3 个 .ckpt/.onnx） | `models\MDX_Net_Models\`（**项目上一级**） | **手动放置**（官方无直链）：从发布页 Release 附件 / 网盘下载后放进来 |
+| faster-whisper | `models\faster-whisper\large-v3-turbo\` | 菜单 **[5]** 自动下载（hf-mirror） |
+| Qwen3-TTS | `K:\HuggingFace\models\Qwen3-TTS-12Hz-1.7B-Base\` | 菜单 **[5]** 自动下载（hf-mirror） |
+| ffmpeg | `models\ffmpeg\bin\ffmpeg.exe` | 菜单 **[5]** 自动下载（gyan.dev） |
+
+放置好 MDX 后运行 bat **[2] Environment check** 确认 `[OK] MDX23C vocal separator`。
 
 ### 完全离线
 整目录拷贝：项目根（含 `.venv`、`tools\uv\`、`models\`、`K:\HuggingFace\models\`）。`.venv` 是 pip 安装的 wheel（无绝对路径依赖），拷过去可直接用 `启动FunVoice.bat`，无需联网。
