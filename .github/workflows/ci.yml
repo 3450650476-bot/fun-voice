@@ -10,6 +10,7 @@ jobs:
   test:
     # 项目为 Windows 专属 (ctypes 内存读取 / nvidia-smi / ffmpeg 路径), 必须在 Windows runner 上测试
     runs-on: windows-latest
+    timeout-minutes: 30   # 防依赖安装/测试异常挂死 (默认 6h 太长)
     steps:
       - uses: actions/checkout@v5
 

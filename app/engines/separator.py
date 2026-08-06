@@ -344,8 +344,7 @@ class MDX23Separator:
 
 # ==================== UVR-MDX onnx 分离器 ====================
 
-MDX_MODELS_DIR = os.path.join(
-    os.environ.get("VP_MODELS", r"K:\视频翻译与配音\models"), "MDX_Net_Models")
+MDX_MODELS_DIR = DEFAULT_MDX_DIR   # 复用相对路径默认 (曾硬编码 K:\...\models, 换机会失效)
 
 # ---- UVR-MDX onnx 模型注册表: 参数单一事实来源 = model_data/model_data.json ----
 # json 以文件哈希为键 (UVR 生成, 非标准 MD5/SHA256, 无法运行时自算); 哈希作为稳定标识常量
