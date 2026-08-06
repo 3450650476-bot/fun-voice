@@ -87,7 +87,7 @@ fun-voice/
 ├── .github/workflows/ci.yml     # GitHub Actions CI (uv sync + 84 用例)
 ├── 启动FunVoice.bat             # 一键菜单: 启动/检查/修复/适配GPU/下载模型
 ├── pyproject.toml + uv.lock     # 依赖 (uv 管理, 自动下载 Python 3.12)
-├── LICENSE / README.md / .env.example
+├── LICENSE / README.md / .env.example / .gitignore
 ```
 
 管道 yield 序列（正常全量）：`[1,1,2,2,3,3,4,4,5,5,5,5,6,6,6,7,7,7]`
