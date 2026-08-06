@@ -41,27 +41,15 @@ jobs:
         env:
           PYTHONUTF8: "1"
 
-      - name: "Probe 1: direct .venv python — import pipeline"
-        run: |
-          .\.venv\Scripts\python.exe -c "import app.pipeline; print('import ok')"
-          Write-Host "PROBE1_EXIT=$LASTEXITCODE"
-          exit 0
+      - name: "Test B1: pipeline"
+        run: uv run --no-sync python -m unittest tests.test_pipeline
+        timeout-minutes: 5
         env:
           PYTHONUTF8: "1"
 
-      - name: "Probe 2: uv run — import pipeline"
-        run: |
-          uv run --no-sync python -c "import app.pipeline; print('import ok')"
-          Write-Host "PROBE2_EXIT=$LASTEXITCODE"
-          exit 0
-        env:
-          PYTHONUTF8: "1"
-
-      - name: "Probe 3: direct .venv python — unittest pipeline only"
-        run: |
-          .\.venv\Scripts\python.exe -m unittest tests.test_pipeline
-          Write-Host "PROBE3_EXIT=$LASTEXITCODE"
-          exit 0
+      - name: "Test B2: resume"
+        run: uv run --no-sync python -m unittest tests.test_resume
+        timeout-minutes: 5
         env:
           PYTHONUTF8: "1"
 
