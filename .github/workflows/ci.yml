@@ -26,6 +26,13 @@ jobs:
       - name: Install CPU torch (small ~200MB; tests never touch CUDA)
         run: uv pip install torch==2.8.0+cpu torchaudio==2.8.0+cpu --index-url https://download.pytorch.org/whl/cpu
 
+      - name: Diagnostic — torch version & separator tests (isolate KeyboardInterrupt)
+        run: |
+          uv run --no-sync python -c "import torch, sys; print('python', sys.version.split()[0]); print('torch', torch.__version__)"
+          uv run --no-sync python -m unittest tests.test_separator -v
+        env:
+          PYTHONUTF8: "1"
+
       - name: "Run unit tests (--no-sync: keep the CPU torch just installed, skip uv re-sync)"
         run: uv run --no-sync python -m unittest discover -s tests
         env:
