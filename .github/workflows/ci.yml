@@ -3,6 +3,8 @@ name: CI
 on:
   push:
   pull_request:
+  # 允许在 Actions 页面手动触发 (Run workflow 按钮)
+  workflow_dispatch:
 
 jobs:
   test:
