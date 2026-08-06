@@ -140,10 +140,14 @@ torch 2.8.0（Windows）三档：**cu128 / cu126 / cpu**。按 `nvidia-smi` 顶�
 
 | 模型 | 位置 | 获取方式 |
 |---|---|---|
-| MDX 分离（3 个 .ckpt/.onnx） | `models\MDX_Net_Models\`（**项目上一级**） | **手动放置**（官方无直链）：从发布页 Release 附件 / 网盘下载后放进来 |
+| MDX 分离（3 个 .ckpt/.onnx） | `models\MDX_Net_Models\`（**项目上一级**） | **手动放置**（官方无直链，见下方来源链接） |
 | faster-whisper | `models\faster-whisper\large-v3-turbo\` | 菜单 **[5]** 自动下载（hf-mirror） |
 | Qwen3-TTS | `K:\HuggingFace\models\Qwen3-TTS-12Hz-1.7B-Base\` | 菜单 **[5]** 自动下载（hf-mirror） |
 | ffmpeg | `models\ffmpeg\bin\ffmpeg.exe` | 菜单 **[5]** 自动下载（gyan.dev） |
+
+**MDX 三模型来源（官方链接，请自行下载后放入 `models\MDX_Net_Models\`）**：
+- `MDX23C-8KFFT-InstVoc_HQ.ckpt`（MIT 许可）→ https://github.com/ZFTurbo/Music-Source-Separation-Training/blob/main/docs/pretrained_models.md
+- `UVR-MDX-NET-Inst_HQ_3.onnx` / `Kim_Vocal_2.onnx`（UVR 社区模型）→ https://ultimatevocalremover.com
 
 放置好 MDX 后运行 bat **[2] Environment check** 确认 `[OK] MDX23C vocal separator`。
 
