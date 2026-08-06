@@ -25,7 +25,7 @@ jobs:
       - name: Install CPU torch (small ~200MB; tests never touch CUDA)
         run: uv pip install torch==2.8.0+cpu torchaudio==2.8.0+cpu --index-url https://download.pytorch.org/whl/cpu
 
-      - name: Run unit tests (--no-sync: keep the CPU torch just installed, skip uv re-sync)
+      - name: "Run unit tests (--no-sync: keep the CPU torch just installed, skip uv re-sync)"
         run: uv run --no-sync python -m unittest discover -s tests
         env:
           # 强制 UTF-8 输出: 中文日志在 cp1252 控制台会 UnicodeEncodeError (app/__init__.py 已兜底 replace)
