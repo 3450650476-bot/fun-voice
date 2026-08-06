@@ -151,6 +151,27 @@ torch 2.8.0（Windows）三档：**cu128 / cu126 / cpu**。按 `nvidia-smi` 顶�
 
 放置好 MDX 后运行 bat **[2] Environment check** 确认 `[OK] MDX23C vocal separator`。
 
+### 名人音色库（本地自备，不入库）
+
+> ⚠️ 本项目**不附带、不分发**任何名人音色素材（涉及肖像权/声音权与 AI 克隆合规，请自行准备有授权的素材）。
+
+音色库目录结构（放在项目上一级 `models\celebrities30s\`）：
+
+```
+models/
+└── celebrities30s/
+    ├── celebrities30s.json5          # 音色配置 (label/图片/音频对应关系)
+    ├── Chinese/                      # 每个音色 = 1 张封面 jpg + 1 段 30s 参考音频 mp3
+    │   ├── 你的音色名.jpg
+    │   └── 你的音色名.mp3
+    ├── English/
+    ├── Japanese/
+    └── Korean/
+```
+
+- 音色素材来源建议：**自己的声音**、朋友授权、AI 合成音色、或已授权的素材库（避免真人明星）
+- 结构不对时 UI 音色面板会显示为空（不影响其他功能，可随时补）
+
 ### 完全离线
 整目录拷贝：项目根（含 `.venv`、`tools\uv\`、`models\`、`K:\HuggingFace\models\`）。`.venv` 是 pip 安装的 wheel（无绝对路径依赖），拷过去可直接用 `启动FunVoice.bat`，无需联网。
 
