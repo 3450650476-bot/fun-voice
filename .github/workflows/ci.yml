@@ -17,7 +17,9 @@ jobs:
       - name: Install uv and Python 3.12
         uses: astral-sh/setup-uv@v7
         with:
-          python-version: "3.12"
+          # 固定 3.12.13: 与本地开发版本一致 — CI 默认 3.12.10 在 test_resume
+          # (os.kill/os.open O_EXCL/soundfile) 上偶发 "测试 OK 但进程退出码 1"
+          python-version: "3.12.13"
           enable-cache: true
 
       - name: Sync dependencies, skip GPU torch (cu128 wheel is 3.3GB, tests are all mocks)
