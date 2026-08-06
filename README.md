@@ -70,20 +70,28 @@ PYTHONUTF8=1 ./.venv/Scripts/python.exe -m unittest discover -s tests
 ```
 fun-voice/
 ├── app/
-│   ├── ui.py                    # Gradio 界面 (流式进度/字幕编辑/续跑按钮)
-│   ├── pipeline.py              # 7 步管道编排: 生成器 yield 中间状态 + 断点续跑 + 全局锁
+│   ├── server.py                # 启动入口 (gradio launch, 深色主题/页脚隐藏注入)
+│   ├── ui.py                    # Gradio 界面 (参数面板/字幕编辑/结果下载/实时监控/续跑/执行范围)
+│   ├── pipeline.py              # 7 步管道编排: 生成器 yield + 断点续跑 + 全局锁 + stop_after
 │   ├── audio.py                 # ffmpeg 封装 (提取/变速/响度/混流, lru_cache 去重)
 │   └── engines/
 │       ├── separator.py         # MDX23C (torch) / UVR-MDX onnx / Kim_Vocal_2
-│       ├── asr.py               # faster-whisper (CTranslate2)
+│       ├── asr.py               # faster-whisper (CTranslate2, 热词/提示词可配)
 │       ├── translator.py        # OpenAI 兼容翻译 + opus-mt 本地兜底
-│       └── tts.py               # Qwen3-TTS 克隆 (x-vector, 分批防卡死)
-├── tests/                       # 52 用例回归套件 (unittest)
+│       └── tts.py               # Qwen3-TTS 克隆 (参考校验/分批/生成参数可配)
+├── tests/                       # 84 用例回归套件 (unittest, 全 fake/mock 秒级)
+├── tools/
+│   ├── adapt_gpu.py             # GPU 档位一键适配 (cu128/cu126/cpu, 改 pyproject 源)
+│   └── fetch_models.py          # 缺失模型一键下载 (whisper/Qwen3-TTS/ffmpeg; MDX 需手动)
 ├── workspace/job-*/             # 每任务中间产物 + state.json (断点续跑)
-└── .env.example
+├── .github/workflows/ci.yml     # GitHub Actions CI (uv sync + 84 用例)
+├── 启动FunVoice.bat             # 一键菜单: 启动/检查/修复/适配GPU/下载模型
+├── pyproject.toml + uv.lock     # 依赖 (uv 管理, 自动下载 Python 3.12)
+├── LICENSE / README.md / .env.example
 ```
 
-管道 yield 序列（正常全量）：`[1,2,3,4,5,5,5,6,6,7,7]`（阶段 5 三条消息：加载提示/批量完成/克隆完成；批量消息次数随批数变化）。
+管道 yield 序列（正常全量）：`[1,1,2,2,3,3,4,4,5,5,5,5,6,6,6,7,7,7]`
+（每阶段"开始提示(含预估) + 完成(实际用时)"；阶段 5 四条：开始/加载/批量/完成，批量消息次数随批数变化；"仅到翻译"执行范围时 `[1,1,2,2,3,3,4,4,4]`）。
 
 ## 换机部署
 
