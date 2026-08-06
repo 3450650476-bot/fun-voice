@@ -88,6 +88,7 @@ fun-voice/
 ├── 启动FunVoice.bat             # 一键菜单: 启动/检查/修复/适配GPU/下载模型
 ├── pyproject.toml + uv.lock     # 依赖 (uv 管理, 自动下载 Python 3.12)
 ├── LICENSE / README.md / .env.example / .gitignore
+└── (项目上级) ../models/         # 模型目录: MDX/whisper/ffmpeg/名人音色库 — 不在仓库内, 见下方"换机部署"
 ```
 
 管道 yield 序列（正常全量）：`[1,1,2,2,3,3,4,4,5,5,5,5,6,6,6,7,7,7]`
