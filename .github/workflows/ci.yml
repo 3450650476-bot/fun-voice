@@ -33,8 +33,28 @@ jobs:
         env:
           PYTHONUTF8: "1"
 
-      - name: "Run unit tests (--no-sync: keep the CPU torch just installed, skip uv re-sync)"
-        run: uv run --no-sync python -m unittest discover -s tests
+      # 拆分测试为短步骤: 长单步骤在 GitHub Actions Windows runner 上偶发 Ctrl+C (KeyboardInterrupt),
+      # 拆短后不再触发, 且失败能精确定位到模块
+      - name: "Test A: align+asr+audio"
+        run: uv run --no-sync python -m unittest tests.test_align tests.test_asr tests.test_audio
+        timeout-minutes: 5
         env:
-          # 强制 UTF-8 输出: 中文日志在 cp1252 控制台会 UnicodeEncodeError (app/__init__.py 已兜底 replace)
+          PYTHONUTF8: "1"
+
+      - name: "Test B: pipeline+resume"
+        run: uv run --no-sync python -m unittest tests.test_pipeline tests.test_resume
+        timeout-minutes: 5
+        env:
+          PYTHONUTF8: "1"
+
+      - name: "Test C: separator+translator+tts"
+        run: uv run --no-sync python -m unittest tests.test_separator tests.test_translator tests.test_tts
+        timeout-minutes: 5
+        env:
+          PYTHONUTF8: "1"
+
+      - name: "Test D: ui"
+        run: uv run --no-sync python -m unittest tests.test_ui
+        timeout-minutes: 5
+        env:
           PYTHONUTF8: "1"
