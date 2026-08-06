@@ -6,9 +6,10 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # 项目为 Windows 专属 (ctypes 内存读取 / nvidia-smi / ffmpeg 路径), 必须在 Windows runner 上测试
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install uv and Python 3.12
         uses: astral-sh/setup-uv@v6

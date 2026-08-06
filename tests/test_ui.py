@@ -8,7 +8,6 @@ os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import app.ui as U
 
-
 class TestRenderLogs(unittest.TestCase):
     """M1 阶段日志彩色化: (stage, msg) -> 带 class 的 HTML 行, 特殊字符转义"""
 
@@ -83,6 +82,7 @@ class TestSysStats(unittest.TestCase):
         self.assertIn("CPU（无 CUDA）", h)
         self.assertIn("显存", h)
 
+    @unittest.skipUnless(sys.platform == "win32", "仅 Windows: 读取本机内存")
     def test_mem_reads_windows(self):
         m = U._process_mem_mb()
         self.assertGreater(m, 0)                  # Windows 下真实读取成功
